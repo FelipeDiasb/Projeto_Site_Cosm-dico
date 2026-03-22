@@ -1,0 +1,291 @@
+<!-- Estrutura principal -->
+ <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maquiagem | Época Cosméticos</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome para ícones (versão gratuita) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+    <div class="container">
+        <div class="top-messages-carousel">
+            <div class="message active">
+                <i class="fas fa-truck"></i> <strong>FRETE GRÁTIS</strong> a partir de <strong class="price-highlight">R$ 179,00*</strong>
+            </div>
+            <div class="message">
+                <i class="fas fa-mobile-alt"></i> <strong>FRETE GRÁTIS no APP</strong> a partir de <strong class="price-highlight">R$ 99,00</strong> + brindes
+            </div>
+            <div class="message">
+                <i class="fas fa-gift"></i> <strong>BRINDE EXCLUSIVO</strong> nas compras acima de <strong class="price-highlight">R$ 150,00</strong>
+            </div>
+            <div class="message">
+                <i class="fas fa-percent"></i> <strong>10% OFF</strong> na primeira compra no APP
+            </div>
+            <div class="message">
+                <i class="fas fa-credit-card"></i> <strong>PARCELE EM ATÉ 6X SEM JUROS</strong>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo">
+                    <a href="#"><i class="fas fa-crown"></i> Essenza Rosa</a>
+                </div>
+                
+                <!-- Barra de busca - modificado nome dentro pergunta -->
+                <div class="search-bar">
+                    <input type="text" placeholder="Oi, o que você está buscando?">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="header-icons">
+    <!-- Bloco de Localização/CEP -->
+    <div class="location-info">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="location-text">
+            <span class="location-label">informe sua</span>
+            <span class="location-value">Localização</span>
+        </div>
+    </div>
+    <!-- Bloco do Usuário -->
+    <div class="user-info">
+        <i class="far fa-user"></i>
+        <div class="user-text">
+            <span class="user-label">Olá! Entrar</span>
+            <span class="user-value">Minha Conta</span>
+        </div>
+    </div>
+    
+    <a href="#"><i class="far fa-heart"></i> <span>Favoritos</span></a>
+    <a href="#"><i class="fas fa-shopping-bag"></i> <span>Sua Sacola</span></a>
+</div>
+        
+        <nav class="nav-menu">
+            <div class="container">
+                <ul>
+                    <!-- <li><a href="#">Ver Tudo</a></li> -->
+                    <li><a href="#">Presentes</a></li>
+                    <li><a href="#">Lançamentos</a></li>
+                    <li><a href="#">Maquiagem</a></li>
+                    <li><a href="#">Skincare</a></li>
+                    <li><a href="#">Perfumaria</a></li>
+                    <li><a href="#">Promoções</a></li>
+                    <li><a href="#">Cabelos</a></li>
+                    <li><a href="#">Marcas</a></li>
+                    <li><a href="#">Corpo e Banho</a></li>
+                    <li><a href="#">Make</a></li>
+                    <li><a href="#">Infantil</a></li>
+                    <li><a href="#">Masculino</a></li>
+                    <li><a href="#">Solar</a></li>
+                    <!-- <li><a href="#">Pets</a></li> -->
+                     <!-- <li><a href="#">Blog</a></li> -->
+                      <!-- <li><a href="#">Casa</a></li> -->
+                       <!-- Opções para adicionar -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="#">Início</a> > <a href="#">Maquiagem</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Maquiagem</h1>
+                <div class="description">
+                    <p>A maquiagem é uma ferramenta incrível de expressão! Com ela, podemos transmitir sentimentos, opiniões e atitudes, seja através de cores vibrantes ou tons neutros. Cada reflexo no espelho conta uma história diferente, do batom vermelho ousado ao nude discreto. Essa paixão pela maquiagem nos inspirou a criar uma categoria repleta de produtos incríveis para você.</p>
+                </div>
+            </div>
+
+            <div class="category-layout">
+                <!-- FILTROS LATERAL -->
+                <aside class="filters">
+                    <h3>Filtrar por</h3>
+                    
+                    <div class="filter-section">
+                        <h4>Categorias</h4>
+                        <ul>
+                            <li><label><input type="checkbox"> Base</label></li>
+                            <li><label><input type="checkbox"> Batom</label></li>
+                            <li><label><input type="checkbox"> Sombra</label></li>
+                            <li><label><input type="checkbox"> Blush</label></li>
+                            <li><label><input type="checkbox"> Corretivo</label></li>
+                            <li><label><input type="checkbox"> Máscara de Cílios</label></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h4>Marcas</h4>
+                        <ul>
+                            <li><label><input type="checkbox"> MAC</label></li>
+                            <li><label><input type="checkbox"> NARS</label></li>
+                            <li><label><input type="checkbox"> Dior</label></li>
+                            <li><label><input type="checkbox"> Lancôme</label></li>
+                            <li><label><input type="checkbox"> Época</label></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h4>Preço</h4>
+                        <div class="price-range">
+                            <input type="range" min="0" max="500" value="250">
+                            <div class="price-values">
+                                <span>R$ 0</span>
+                                <span>R$ 500+</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- GRADE DE PRODUTOS -->
+                <div class="products-grid">
+                    <!-- Produto 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x300/FFF0F0/FF69B4?text=Base" alt="Produto">
+                            <span class="badge">-20%</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Marca Exemplo</h3>
+                            <h4 class="product-title">Base Líquida Alta Cobertura</h4>
+                            <div class="product-price">
+                                <span class="old-price">R$ 89,90</span>
+                                <span class="current-price">R$ 71,92</span>
+                            </div>
+                            <div class="installment">ou 3x de R$ 23,97</div>
+                            <button class="btn-add">Adicionar à sacola</button>
+                        </div>
+                    </div>
+
+                    <!-- Produto 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x300/FFF0F0/FF69B4?text=Batom" alt="Produto">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Marca Exemplo</h3>
+                            <h4 class="product-title">Batom Matte Vermelho</h4>
+                            <div class="product-price">
+                                <span class="current-price">R$ 45,90</span>
+                            </div>
+                            <div class="installment">ou 2x de R$ 22,95</div>
+                            <button class="btn-add">Adicionar à sacola</button>
+                        </div>
+                    </div>
+
+                    <!-- Produto 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x300/FFF0F0/FF69B4?text=Blush" alt="Produto">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Marca Exemplo</h3>
+                            <h4 class="product-title">Blush em Pó Rosê</h4>
+                            <div class="product-price">
+                                <span class="current-price">R$ 62,90</span>
+                            </div>
+                            <div class="installment">ou 3x de R$ 20,97</div>
+                            <button class="btn-add">Adicionar à sacola</button>
+                        </div>
+                    </div>
+
+                    <!-- Produto 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x300/FFF0F0/FF69B4?text=Sombra" alt="Produto">
+                            <span class="badge">Novo</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Marca Exemplo</h3>
+                            <h4 class="product-title">Paleta de Sombras Nude</h4>
+                            <div class="product-price">
+                                <span class="current-price">R$ 129,90</span>
+                            </div>
+                            <div class="installment">ou 4x de R$ 32,48</div>
+                            <button class="btn-add">Adicionar à sacola</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTEÚDO INFORMATIVO (SEO) -->
+            <div class="info-content">
+                <h2>Maquiagem na Época Cosméticos</h2>
+                <p>Seja uma maquiagem para o dia a dia, para festa ou para um momento especial, fizemos uma seleção das melhores marcas e dicas de maquiagem para fazer você se sentir ainda mais bonita.</p>
+                
+                <h3>Como preparar a pele para maquiagem?</h3>
+                <p>A preparação da pele é crucial para uma maquiagem de longa duração e com acabamento perfeito.</p>
+                <ul>
+                    <li><strong>Limpeza:</strong> Use um limpador suave para remover impurezas.</li>
+                    <li><strong>Esfoliação:</strong> Realize uma esfoliação suave 1-2 vezes por semana.</li>
+                    <li><strong>Hidratação:</strong> Aplique um hidratante adequado ao seu tipo de pele.</li>
+                    <li><strong>Protetor Solar:</strong> Nunca se esqueça do protetor solar!</li>
+                    <li><strong>Primer:</strong> Use um primer para preparar a pele.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Institucional</h4>
+                    <ul>
+                        <li><a href="#">Sobre a Época</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Ajuda</h4>
+                    <ul>
+                        <li><a href="#">Central de Atendimento</a></li>
+                        <li><a href="#">Trocas e Devoluções</a></li>
+                        <li><a href="#">Entregas</a></li>
+                        <li><a href="#">Formas de Pagamento</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Redes Sociais</h4>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Formas de Pagamento</h4>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-paypal"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Época Cosméticos - Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
