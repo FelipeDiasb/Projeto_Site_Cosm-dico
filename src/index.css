@@ -7,7 +7,6 @@
     @apply text-gray-700 antialiased bg-white;
   }
   
-  /* Estilos globais base */
   h1 {
     @apply text-4xl lg:text-5xl font-bold text-gray-900 mb-4;
   }
@@ -30,7 +29,6 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
   
-  /* Classes de utilidade personalizadas */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -44,10 +42,20 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  /* Esconder barra de rolagem no menu horizontal */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {
-  /* Animações personalizadas */
+  /* Animações */
   @keyframes slideUp {
     from {
       transform: translateY(100%);
@@ -62,9 +70,23 @@
   @keyframes fadeIn {
     from {
       opacity: 0;
+      transform: translateY(-10px);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
     }
   }
   
@@ -73,6 +95,20 @@
   }
   
   .animate-fade-in {
-    animation: fadeIn 0.3s ease-in;
+    animation: fadeIn 0.2s ease-out;
   }
+  
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+  }
+}
+/* Garantir que o submenu não seja cortado */
+.overflow-x-auto {
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* Para o container do menu */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
 }

@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-4">Institucional</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-primary text-sm transition-colors">Sobre a Época</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-primary text-sm transition-colors">Sobre a ✿ Essenza Rosa ✿</a></li>
               <li><a href="#" className="text-gray-400 hover:text-primary text-sm transition-colors">Trabalhe Conosco</a></li>
               <li><a href="#" className="text-gray-400 hover:text-primary text-sm transition-colors">Política de Privacidade</a></li>
               <li><a href="#" className="text-gray-400 hover:text-primary text-sm transition-colors">Termos de Uso</a></li>
