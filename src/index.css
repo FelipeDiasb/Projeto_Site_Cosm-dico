@@ -112,3 +112,18 @@
 .overflow-x-auto::-webkit-scrollbar {
   display: none;
 }
+/* Animação suave para o mega menu */
+@keyframes megaMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-mega-menu {
+  animation: megaMenuFadeIn 0.2s ease-out;
+}

@@ -1,143 +1,184 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { MapPin, User, Heart, ShoppingBag, Search, Menu, X, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import Carousel from './Carousel';
+
+interface DropdownMeta {
+  name: string;
+  top: number;
+}
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownMeta, setDropdownMeta] = useState<DropdownMeta | null>(null);
+
   const navRef = useRef<HTMLUListElement>(null);
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
-  // Menu items - você pode adicionar quantos quiser
+
+  // Menu items com submenus completos
   const menuItems = [
+    { name: 'LANÇAMENTOS', submenu: null },
     { 
-      name: 'LANÇAMENTOS',
-      submenu: null
-    },
-    { 
-      name: 'PRESENTES',
-      submenu: null
-    },
-    { 
-      name: 'MAQUIAGEM',
-      submenu: ['Base', 'Batom', 'Sombra', 'Blush', 'Corretivo', 'Máscara de Cílios', 'Delineador', 'Pó Facial']
-    },
-    { 
-      name: 'SKINCARE',
-      submenu: ['Limpeza', 'Hidratação', 'Protetor Solar', 'Sérum', 'Máscaras Faciais', 'Óleos Faciais']
-    },
-    { 
-      name: 'PERFUMES',
+      name: 'PRESENTES', 
       submenu: [
-        'Perfumaria Feminina',
-        'Perfumaria Masculina',
-        'Body Splash',
-        'Perfumaria Infantil',
-        'Perfumaria Unissex',
-        'Perfumaria para Casa',
-        'Kits',
-        'Pocket Size',
-        'Veganos',
-        'Universo da Perfumaria',
-        'Família Olfativa',
-        'Amadeirado',
-        'Aromático',
-        'Chipre',
-        'Cítrico',
-        'Floral',
-        'Frutal',
-        'Oriental',
-        'Descubra sua Fragrância',
-        'Perfume',
-        'Eau de Parfum',
-        'Colônia'
+        { title: 'Destaques', items: ['Todos os presentes', 'Presentes para o Dia das Mães', 'Escolha o presente perfeito', 'Monte seu Presente'] },
+        { title: 'Ocasiões', items: ['Presentes de Aniversário', 'Presentes de Agradecimento', 'Presentes para Casa', 'Presente para o Dia dos Pais', 'Presente para o Dia das Crianças', 'Presentes para o Natal'] },
+        { title: 'Por Faixa de Preço', items: ['Até 50 Reais', 'Até 100 Reais', 'Até 160 Reais', 'Até 200 Reais', 'Acima de 200 Reais'] },
+        { title: 'Kits para Presente', items: ['Kits Masculinos', 'Kits Femininos', 'Kits Infantis'] },
+        { title: 'Para Quem?', items: ['Presentes Masculinos', 'Presentes Femininos', 'Presentes Adolescente', 'Presentes Criança', 'Presentes Bebê'] },
+        { title: 'Especiais', items: ['QUIZ: Encontre o presente ideal', 'Vale-Presente e Experiência'] }
       ]
     },
-    { 
+    {
+      name: 'MAQUIAGEM',
+      submenu: [
+        { title: 'Categorias', items: ['Base', 'Batom', 'Sombra', 'Blush', 'Corretivo', 'Máscara de Cílios', 'Delineador', 'Pó Facial'] }
+      ]
+    },
+    {
+      name: 'SKINCARE',
+      submenu: [
+        { title: 'Cuidados', items: ['Limpeza', 'Hidratação', 'Protetor Solar', 'Sérum', 'Máscaras Faciais', 'Óleos Faciais'] }
+      ]
+    },
+    {
+      name: 'PERFUMES',
+      submenu: [
+        { title: 'Perfumaria', items: ['Perfumaria Feminina', 'Perfumaria Masculina', 'Body Splash', 'Perfumaria Infantil', 'Perfumaria Unissex', 'Perfumaria para Casa'] },
+        { title: 'Kits e Tamanhos', items: ['Kits', 'Pocket Size', 'Veganos'] },
+        { title: 'Universo Olfativo', items: ['Universo da Perfumaria', 'Família Olfativa', 'Amadeirado', 'Aromático', 'Chipre', 'Cítrico', 'Floral', 'Frutal', 'Oriental'] },
+        { title: 'Descubra', items: ['Descubra sua Fragrância', 'Perfume', 'Eau de Parfum', 'Colônia'] }
+      ]
+    },
+    {
       name: 'CABELOS',
-      submenu: ['Shampoo', 'Condicionador', 'Máscara Capilar', 'Óleos', 'Finalizadores', 'Tratamentos']
+      submenu: [
+        { title: 'Cuidados', items: ['Shampoo', 'Condicionador', 'Máscara Capilar', 'Óleos', 'Finalizadores', 'Tratamentos'] }
+      ]
     },
-    { 
+    {
       name: 'MARCAS',
-      submenu: ['MAC', 'NARS', 'Dior', 'Lancôme', 'Época', 'Natura', 'O Boticário']
+      submenu: [
+        { title: 'Nossas Marcas', items: ['MAC', 'NARS', 'Dior', 'Lancôme', 'Época', 'Natura', 'O Boticário'] }
+      ]
     },
-    { 
+    {
       name: 'PROMOÇÕES',
-      submenu: ['Ofertas do Dia', 'Queima de Estoque', 'Compre 2 Leve 3', 'Frete Grátis']
+      submenu: [
+        { title: 'Ofertas', items: ['Ofertas do Dia', 'Queima de Estoque', 'Compre 2 Leve 3', 'Frete Grátis'] },
+        { title: 'Produtos em Promoção', items: ['Leve 3, Pague 2', 'Desconto Progressivo', 'Mais vendidos', 'Termos e Condições'] },
+        { title: 'Cupons de Desconto', items: ['Todos os cupons', '1ª Compra com Desconto'] },
+        { title: 'Fidelidade', items: ['Promoções ', 'Personalizadas', 'Promoções Fidelidade'] },
+        { title: 'Promos por Categoria', items: ['Promoção em Perfumaria', 'Promoção em Corpo e Banho', 'Promoção em Cabelos', 'Promoção em Maquiagem','Promoção em Skincare'] }
+      ]
+
+
     },
-    { 
+    {
       name: 'FRAGRÂNCIAS',
-      submenu: ['Floral', 'Amadeirado', 'Cítrico', 'Oriental', 'Aromático', 'Frutal']
+      submenu: [
+        { title: 'Famílias', items: ['Floral', 'Amadeirado', 'Cítrico', 'Oriental', 'Aromático', 'Frutal'] }
+      ]
     },
-    { 
-      name: 'MASCULINO',
-      submenu: null
-    },
-    { 
-      name: 'CASA',
-      submenu: null
-    },
-    { 
+    { name: 'MASCULINO', submenu: null },
+    { name: 'CASA', submenu: null },
+    {
       name: 'CORPO E BANHO',
-      submenu: ['Hidratantes', 'Óleos Corporais', 'Sabonetes', 'Esfoliantes', 'Manteigas']
-    }
+      submenu: [
+        { title: 'Produtos', items: ['Hidratantes', 'Óleos Corporais', 'Sabonetes', 'Esfoliantes', 'Manteigas'] }
+      ]
+    },
   ];
-useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+
+  // Função para organizar submenu em colunas (para itens simples)
+  const organizeSubmenuIntoColumns = (items: string[], maxRows: number = 10) => {
+    const numColumns = Math.ceil(items.length / maxRows);
+    const columns: string[][] = [];
+    
+    for (let i = 0; i < numColumns; i++) {
+      columns.push(items.slice(i * maxRows, (i + 1) * maxRows));
+    }
+    
+    return columns;
+  };
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const checkScrollButtons = () => {
+  const checkScrollButtons = useCallback(() => {
     if (navRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = navRef.current;
       setShowLeftArrow(scrollLeft > 0);
       setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10);
     }
-  };
-
-  const scrollLeft = () => {
-    if (navRef.current) {
-      navRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-      setTimeout(checkScrollButtons, 300);
-    }
-  };
-
-  const scrollRight = () => {
-    if (navRef.current) {
-      navRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-      setTimeout(checkScrollButtons, 300);
-    }
-  };
-
-  const handleMouseEnter = (itemName: string) => {
-    console.log('Mouse entrou em:', itemName); // Para debug
-    if (dropdownTimeoutRef.current) {
-      clearTimeout(dropdownTimeoutRef.current);
-    }
-    setActiveDropdown(itemName);
-  };
-
-  const handleMouseLeave = () => {
-     console.log('Mouse saiu'); // Para debug
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 150);
-  };
+  }, []);
 
   useEffect(() => {
     checkScrollButtons();
     window.addEventListener('resize', checkScrollButtons);
     return () => window.removeEventListener('resize', checkScrollButtons);
+  }, [checkScrollButtons]);
+
+  useEffect(() => {
+    const handlePageScroll = () => setDropdownMeta(null);
+    window.addEventListener('scroll', handlePageScroll);
+    return () => window.removeEventListener('scroll', handlePageScroll);
   }, []);
 
+  const scrollLeft = () => {
+    navRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
+    setTimeout(checkScrollButtons, 300);
+  };
+
+  const scrollRight = () => {
+    navRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
+    setTimeout(checkScrollButtons, 300);
+  };
+
+  const handleMouseEnter = (itemName: string, itemEl: HTMLElement) => {
+  if (dropdownTimeoutRef.current) {
+    clearTimeout(dropdownTimeoutRef.current);
+  }
+
+    const rect = itemEl.getBoundingClientRect();
+    const headerRect = document.querySelector('header')?.getBoundingClientRect();
+  
+  setDropdownMeta({
+    name: itemName,
+    top: rect.bottom + 4,
+  });
+};
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setDropdownMeta(null);
+    }, 150);
+  };
+
+  const handleDropdownMouseEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+  };
+
+  const activeItem = menuItems.find((item) => item.name === dropdownMeta?.name);
+
+  // Verifica se o submenu é do tipo categorizado (com títulos)
+  const isCategorizedSubmenu = (submenu: any): submenu is { title: string; items: string[] }[] => {
+    return Array.isArray(submenu) && submenu.length > 0 && 'title' in submenu[0];
+  };
+
   return (
-    <header className={`sticky top-0 z-50 bg-white transition-all duration-300 ${isScrolled ? 'shadow-lg' : 'shadow-sm'}`}>
+    <header
+      className={`sticky top-0 z-50 bg-white transition-all duration-300 ${
+        isScrolled ? 'shadow-lg' : 'shadow-sm'
+      }`}
+    >
       <Carousel />
 
       <div className="container-custom py-4">
@@ -146,20 +187,17 @@ useEffect(() => {
             <button
               className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-  
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            {/* logo */}
           </div>
-          {/* Elemento decorativo com gradiente animado */}
+
           <div className="hidden md:block">
             <span className="bg-gradient-to-r from-pink-400 via-fuchsia-500 to-rose-400 bg-[length:200%_100%] animate-gradient bg-clip-text text-transparent font-semibold text-3xl tracking-wide">
               ✿ Essenza Rosa ✿
             </span>
           </div>
 
-          {/* Busca */}
           <div className="flex-1 max-w-md">
             <div className="relative">
               <input
@@ -212,19 +250,34 @@ useEffect(() => {
                     <a href="#" className="hover:text-primary transition-colors">
                       {item.name}
                     </a>
-                    {item.submenu && (
-                      <ChevronDown size={16} className="text-gray-400" />
-                    )}
+                    {item.submenu && <ChevronDown size={16} className="text-gray-400" />}
                   </div>
                   {item.submenu && (
                     <ul className="pl-4 mt-2 space-y-2 border-l-2 border-gray-200">
-                      {item.submenu.map((sub) => (
-                        <li key={sub}>
-                          <a href="#" className="block py-1 text-sm text-gray-500 hover:text-primary transition-colors">
-                            {sub}
-                          </a>
-                        </li>
-                      ))}
+                      {isCategorizedSubmenu(item.submenu) ? (
+                        item.submenu.map((category) => (
+                          <li key={category.title}>
+                            <span className="font-semibold text-gray-600 text-sm">{category.title}</span>
+                            <ul className="pl-2 mt-1 space-y-1">
+                              {category.items.map((sub) => (
+                                <li key={sub}>
+                                  <a href="#" className="block py-1 text-sm text-gray-500 hover:text-primary transition-colors">
+                                    {sub}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </li>
+                        ))
+                      ) : (
+                        (item.submenu as string[]).map((sub) => (
+                          <li key={sub}>
+                            <a href="#" className="block py-1 text-sm text-gray-500 hover:text-primary transition-colors">
+                              {sub}
+                            </a>
+                          </li>
+                        ))
+                      )}
                     </ul>
                   )}
                 </li>
@@ -234,8 +287,8 @@ useEffect(() => {
         </div>
       )}
 
-      {/* Menu desktop com scroll horizontal e submenu dropdown */}
-      <nav className="hidden lg:block border-t border-gray-100 relative">
+      {/* Menu desktop */}
+      <nav className="hidden lg:block border-t border-gray-100">
         <div className="container-custom relative">
           {showLeftArrow && (
             <button
@@ -257,64 +310,102 @@ useEffect(() => {
 
           <ul
             ref={navRef}
-            className="flex gap-8 py-3 overflow-x-auto scrollbar-hide"
+            className="flex gap-8 py-3 overflow-x-auto"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             onScroll={checkScrollButtons}
           >
             {menuItems.map((item) => (
-              <li 
-                key={item.name} 
+              <li
+                key={item.name}
                 className="relative flex-shrink-0 group"
-                onMouseEnter={() => item.submenu && handleMouseEnter(item.name)}
+                onMouseEnter={(e) => item.submenu && handleMouseEnter(item.name, e.currentTarget)}
                 onMouseLeave={handleMouseLeave}
               >
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="relative text-sm font-medium text-gray-700 hover:text-primary transition-colors whitespace-nowrap py-2 block"
                 >
                   {item.name}
-                  {/* Linha rosa gradiente no hover */}
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-pink-400 via-fuchsia-500 to-rose-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-pink-400 via-fuchsia-500 to-rose-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full" />
                 </a>
-                
-                {/* Submenu dropdown */}
-
-                {/* Submenu dropdown */}
-                {item.submenu && activeDropdown === item.name && (
-                  <div 
-                    className="absolute top-full mt-2 bg-white shadow-xl rounded-lg border border-gray-100 min-w-[320px] z-[1100]"
-                    style={{ 
-                      animation: 'fadeIn 0.2s ease-out',
-                      left: '0',
-                      right: 'auto',
-                      backgroundColor: 'white'
-                    }}
-                    onMouseEnter={() => handleMouseEnter(item.name)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    <div className="p-4 bg-white rounded-lg">
-                      <h4 className="font-bold text-primary mb-3 border-b border-gray-200 pb-2">
-                        {item.name}
-                      </h4>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                        {item.submenu.map((sub) => (
-                          <a
-                            key={sub}
-                            href="#"
-                            className="text-sm text-gray-600 hover:text-primary transition-colors py-1.5 block"
-                          >
-                            {sub}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
               </li>
             ))}
           </ul>
         </div>
       </nav>
+
+    {/* ✅ MEGA MENU - alinhado com o container do header (mesma largura) */}
+{dropdownMeta && activeItem?.submenu && (
+  <div
+    className="absolute bg-white shadow-2xl rounded-lg border border-gray-100 z-[9999]"
+    style={{
+      top: `${dropdownMeta.top}px`,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: '100%',
+      maxWidth: '1280px', // mesma largura do container-custom
+      animation: 'fadeIn 0.15s ease-out',
+    }}
+    onMouseEnter={handleDropdownMouseEnter}
+    onMouseLeave={handleMouseLeave}
+  >
+    <div className="py-8 px-4 sm:px-6 lg:px-8">
+            {/* Layout em colunas responsivo */}
+            {isCategorizedSubmenu(activeItem.submenu) ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {activeItem.submenu.map((category) => (
+                  <div key={category.title} className="flex flex-col">
+                    <h5 className="font-semibold text-primary text-sm mb-2 border-l-2 border-pink-400 pl-2">
+                      {category.title}
+                    </h5>
+                    <div className="flex flex-col gap-0.5">
+                      {category.items.map((item) => (
+                        <a
+                          key={item}
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-primary hover:bg-pink-50 transition-all duration-200 py-1 px-2 rounded-lg block"
+                        >
+                          {item}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-6">
+                {(() => {
+                  const items = activeItem.submenu as string[];
+                  const columns = organizeSubmenuIntoColumns(items, 8);
+                  return columns.map((column, colIndex) => (
+                    <div key={colIndex} className="flex flex-col gap-0.5 min-w-[180px]">
+                      {column.map((sub) => (
+                        <a
+                          key={sub}
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-primary hover:bg-pink-50 transition-all duration-200 py-1 px-2 rounded-lg block"
+                        >
+                          {sub}
+                        </a>
+                      ))}
+                    </div>
+                  ));
+                })()}
+              </div>
+            )}
+            
+            {/* Rodapé do menu apenas para PRESENTES */}
+            {activeItem.name === 'PRESENTES' && (
+              <div className="mt-5 pt-3 border-t border-gray-100">
+                <a href="#" className="text-sm text-primary hover:underline flex items-center gap-1 font-medium">
+                  Ver todos os presentes
+                  <ChevronRight size={16} />
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 };
