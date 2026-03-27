@@ -1,0 +1,522 @@
+================================================================================
+                    ÉPOCA COSMÉTICOS - PROJETO FRONTEND
+                           DOCUMENTAÇÃO TÉCNICA
+================================================================================
+
+DATA DE FINALIZAÇÃO: 26 de Março de 2026
+HORA: 18:30
+VERSÃO: 1.0.0
+STATUS: ✅ EM PRODUÇÃO
+
+================================================================================
+                             VISÃO GERAL DO PROJETO
+================================================================================
+
+Projeto de frontend para e-commerce de cosméticos, desenvolvido com React,
+TypeScript, Vite e Tailwind CSS. Interface moderna, responsiva e com mega menu
+interativo.
+
+-------------------------------------------------------------------------------
+                          TECNOLOGIAS UTILIZADAS
+-------------------------------------------------------------------------------
+
+| Tecnologia          | Versão    | Finalidade                              |
+|---------------------|-----------|-----------------------------------------|
+| React               | 18.3.1    | Biblioteca principal                    |
+| TypeScript          | 5.5.3     | Tipagem estática                        |
+| Vite                | 5.4.0     | Build e desenvolvimento rápido          |
+| Tailwind CSS        | 3.4.6     | Estilização utility-first               |
+| React Router DOM    | 6.22.0    | Navegação entre páginas                 |
+| Lucide React        | 0.344.0   | Ícones vetoriais                        |
+| Framer Motion       | 12.38.0   | Animações                               |
+
+-------------------------------------------------------------------------------
+                          ESTRUTURA DE DIRETÓRIOS
+-------------------------------------------------------------------------------
+
+projeto-epoca/
+│
+├── public/                          # Arquivos estáticos
+│   └── assets/                      # Imagens e ícones públicos
+│
+├── src/
+│   ├── assets/                      # Recursos do projeto
+│   │   ├── hero.png                 # Imagem hero (removível)
+│   │   ├── react.svg                # Logo React
+│   │   └── vite.svg                 # Logo Vite
+│   │
+│   ├── components/                  # Componentes reutilizáveis
+│   │   ├── common/                  # Componentes genéricos
+│   │   │   ├── Button.tsx           # Botão customizável
+│   │   │   └── Input.tsx            # Input customizável
+│   │   │
+│   │   ├── layout/                  # Componentes de estrutura
+│   │   │   ├── Header.tsx           # Cabeçalho principal
+│   │   │   ├── Footer.tsx           # Rodapé
+│   │   │   └── Carousel.tsx         # Carrossel de mensagens
+│   │   │
+│   │   └── product/                 # Componentes de produto
+│   │       ├── ProductCard.tsx      # Card de produto
+│   │       ├── ProductGrid.tsx      # Grade de produtos
+│   │       └── ProductFilters.tsx   # Filtros laterais
+│   │
+│   ├── hooks/                       # Custom Hooks
+│   │   └── useCarousel.ts           # Hook do carrossel
+│   │
+│   ├── pages/                       # Páginas da aplicação
+│   │   └── Home.tsx                 # Página inicial
+│   │
+│   ├── types/                       # Tipos TypeScript
+│   │   └── index.ts                 # Interfaces globais
+│   │
+│   ├── utils/                       # Funções utilitárias
+│   │   └── formatPrice.ts           # Formatação de preços
+│   │
+│   ├── App.tsx                      # Componente principal
+│   ├── App.css                      # Estilos do App (removido)
+│   ├── main.tsx                     # Ponto de entrada
+│   └── index.css                    # Estilos globais (Tailwind)
+│
+├── index.html                       # HTML principal
+├── package.json                     # Dependências
+├── tailwind.config.js               # Configuração do Tailwind
+├── postcss.config.js                # Configuração do PostCSS
+├── tsconfig.json                    # Configuração TypeScript
+├── vite.config.ts                   # Configuração do Vite
+└── DOCUMENTACAO.txt                 # Este arquivo - criação de Documentação 
+
+================================================================================
+                       FUNCIONALIDADES IMPLEMENTADAS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. HEADER FIXO                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Sticky header que permanece no topo ao rolar a página                    │
+│ • Sombra dinâmica que aparece ao rolar                                     │
+│ • Z-index otimizado para sobreposição correta                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 2. CARROSSEL DE MENSAGENS                                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • 5 mensagens rotativas automáticas a cada 4 segundos                      │
+│ • Animação suave de entrada e saída                                        │
+│ • Mensagens personalizadas com ícones e destaques em negrito               │
+│ • Pausa ao passar o mouse                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3. MENU PRINCIPAL COM SCROLL HORIZONTAL                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Menu com scroll horizontal para acomodar muitos itens                    │
+│ • Setas de navegação esquerda/direita que aparecem dinamicamente          │
+│ • Scroll suave ao clicar nas setas                                         │
+│ • Barra de rolagem oculta (scrollbar-hide)                                 │
+│ • Itens do menu: LANÇAMENTOS, PRESENTES, MAQUIAGEM, SKINCARE,              │
+│   PERFUMES, CABELOS, MARCAS, PROMOÇÕES, FRAGRÂNCIAS, MASCULINO,           │
+│   CASA, CORPO E BANHO                                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4. MEGA MENU DROPDOWN                                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Submenu que aparece ao passar o mouse sobre itens com submenu            │
+│ • Alinhado centralmente com o container do header                          │
+│ • Mesma largura do container (max-width: 1280px)                           │
+│ • Layout em múltiplas colunas (grid responsivo)                            │
+│ • Categorias organizadas com títulos                                       │
+│ • Animação suave de fade-in                                                │
+│ • Delay de 150ms para fechamento (evita fechamento acidental)             │
+│ • Itens com submenu: MAQUIAGEM, SKINCARE, PERFUMES, CABELOS,               │
+│   MARCAS, PROMOÇÕES, FRAGRÂNCIAS, CORPO E BANHO, PRESENTES                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 5. SUBMENU PRESENTES (Destaque)                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • 6 categorias organizadas:                                                │
+│   - Destaques (4 itens)                                                    │
+│   - Ocasiões (6 itens)                                                     │
+│   - Por Faixa de Preço (5 itens)                                           │
+│   - Kits para Presente (3 itens)                                           │
+│   - Para Quem? (5 itens)                                                   │
+│   - Especiais (2 itens)                                                    │
+│ • Rodapé com link "Ver todos os presentes"                                 │
+│ • Layout em grid com até 4 colunas no desktop                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 6. GRADE DE PRODUTOS                                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Layout em grid responsivo                                                │
+│ • Cards de produtos com imagem, nome, marca, preço                         │
+│ • Badge de promoção (ex: -20%, NOVO)                                       │
+│ • Preço com desconto e parcelamento                                        │
+│ • Efeito hover com elevação e zoom na imagem                               │
+│ • Botão "Adicionar à sacola" com feedback visual                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 7. FILTROS LATERAIS                                                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Filtros por categorias (Base, Batom, Sombra, etc.)                       │
+│ • Filtros por marcas (MAC, NARS, Dior, etc.)                               │
+│ • Filtro por faixa de preço (range slider)                                 │
+│ • Botão "Limpar filtros" que aparece quando há filtros ativos              │
+│ • Estado gerenciado com useState                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 8. ELEMENTOS DO HEADER                                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Logo "Época Cosméticos"                                                  │
+│ • Elemento decorativo gradiente "✿ Essenza Rosa ✿" com animação           │
+│ • Barra de busca com ícone de lupa                                         │
+│ • Bloco de localização (CEP)                                               │
+│ • Bloco de usuário "Olá! Entrar / Minha Conta"                             │
+│ • Ícone de favoritos                                                       │
+│ • Ícone do carrinho de compras                                             │
+│ • Menu mobile com botão hamburguer                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 9. RODAPÉ (FOOTER)                                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Seções: Institucional, Ajuda, Redes Sociais, Segurança e Pagamento       │
+│ • Links institucionais e de ajuda                                          │
+│ • Ícones de redes sociais (Instagram, Facebook, YouTube)                   │
+│ • Ícones de pagamento (Cartão de Crédito, Truck, Shield)                   │
+│ • Copyright e ano                                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 10. RESPONSIVIDADE                                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Desktop (≥1024px): Menu horizontal com setas, mega menu completo         │
+│ • Tablet (768px - 1024px): Ajustes de espaçamento e grid                   │
+│ • Mobile (<768px): Menu hamburguer, submenus em lista vertical             │
+│ • Container customizado com max-width e padding responsivo                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                         ANIMAÇÕES E TRANSIÇÕES
+================================================================================
+
+| Animação              | Aplicação                           | Duração |
+|-----------------------|-------------------------------------|---------|
+| fadeIn                | Submenu dropdown                    | 0.2s    |
+| slideUp               | Mensagens do carrossel              | 0.5s    |
+| gradient              | Texto "✿ Essenza Rosa ✿"            | 3s      |
+| scale-x               | Linha rosa no hover do menu         | 0.3s    |
+| scale-105             | Zoom na imagem do produto           | 0.5s    |
+| translateY            | Elevação do card do produto         | 0.3s    |
+| shadow                | Header ao rolar                     | 0.3s    |
+
+================================================================================
+                         CÓDIGOS E CLASSES IMPORTANTES
+================================================================================
+
+CLASSES TAILWIND PERSONALIZADAS:
+
+| Classe               | Finalidade                                    |
+|----------------------|-----------------------------------------------|
+| .container-custom    | Container centralizado com max-w-7xl          |
+| .scrollbar-hide      | Esconde a barra de rolagem                    |
+| .line-clamp-2        | Limita texto em 2 linhas                      |
+| .animate-gradient    | Animação de gradiente no texto                |
+| .animate-fade-in     | Animação fade-in                              |
+
+Z-INDEX HIERARQUIA:
+
+| Elemento             | Z-Index                                       |
+|----------------------|-----------------------------------------------|
+| Header               | 50                                            |
+| Setas do menu        | 20                                            |
+| Submenu              | 9999                                          |
+
+CORES PRINCIPAIS:
+
+| Cor                  | Classe Tailwind | Código Hex |
+|----------------------|-----------------|------------|
+| Primária             | primary         | #ff6b6b    |
+| Rosa Gradiente       | from-pink-400   | #f472b6    |
+| Fúcsia Gradiente     | via-fuchsia-500 | #d946ef    |
+| Rosa Escuro          | to-rose-400     | #fb7185    |
+
+================================================================================
+                            COMANDOS ÚTEIS                            - voltar para verificação se as etapas abaixo finalizaram.
+================================================================================
+
+DESENVOLVIMENTO:
+  npm run dev          # Inicia servidor de desenvolvimento
+  npm run build        # Gera build de produção
+  npm run preview      # Visualiza build localmente
+
+INSTALAÇÃO:
+  npm install          # Instala todas as dependências
+
+LIMPEZA:
+  rm -rf node_modules package-lock.json  # Remove dependências (Linux/Mac)
+  Remove-Item -Recurse -Force node_modules, package-lock.json  # Windows
+
+================================================================================
+                    PRÓXIMAS MELHORIAS SUGERIDAS
+================================================================================
+
+☐ Implementar integração com backend (API REST)
+☐ Adicionar autenticação de usuário (JWT)
+☐ Implementar carrinho de compras com estado global
+☐ Criar página de detalhe do produto
+☐ Adicionar checkout com gateway de pagamento
+☐ Implementar busca com autocomplete
+☐ Adicionar filtros dinâmicos (filtragem real de produtos)
+☐ Criar página de perfil do usuário
+☐ Implementar sistema de avaliações de produtos
+☐ Adicionar SEO otimizado
+☐ Implementar PWA (Progressive Web App)
+
+================================================================================
+                          CONTRIBUIDORES
+================================================================================
+
+Projeto desenvolvido com foco em:
+• Boas práticas de código
+• Componentização e reutilização
+• Responsividade e acessibilidade
+• Experiência do usuário (UX)
+• Performance otimizada
+
+================================================================================
+                            LICENÇA
+================================================================================
+
+Este projeto é de uso exclusivo para fins de desenvolvimento e aprendizado.
+
+================================================================================
+                        FIM DA DOCUMENTAÇÃO
+================================================================================
+
+Data: 26/03/2026
+Hora: 22:45
+Versão: 1.0.0
+Status: ✅ PRODUÇÃO
+
+================================================================================
+================================================================================
+                    PRÓXIMAS MELHORIAS - BACKLOG DO PROJETO
+================================================================================
+
+Data de atualização: 26/03/2026
+Status do Projeto: 🟢 EM DESENVOLVIMENTO ATIVO
+Valor estimado de mercado: R$ 15.000,00 a R$ 20.000,00
+
+----------------------------------------------------------------------------
+                          ETAPA 1 - FRONTEND AVANÇADO
+----------------------------------------------------------------------------
+
+☐ BANNERS PROMOCIONAIS
+  ├── Banner principal (hero) no topo da página
+  ├── Banners laterais para categorias em destaque
+  ├── Banners entre produtos (intersticiais)
+  ├── Carrossel de banners com autoplay e navegação
+  └── Banners responsivos (mobile, tablet, desktop)
+
+☐ EXPANSÃO DE CATEGORIAS E SUBMENUS
+  ├── Adicionar submenu para "LANÇAMENTOS"
+  ├── Adicionar submenu para "MASCULINO"
+  ├── Adicionar submenu para "CASA"
+  ├── Expandir categorias de "MAQUIAGEM" (adicionar subcategorias)
+  ├── Expandir categorias de "SKINCARE" (adicionar rotina completa)
+  ├── Expandir categorias de "PERFUMES" (adicionar marcas)
+  └── Criar estrutura hierárquica de categorias (níveis)
+
+☐ PÁGINA DE DETALHE DO PRODUTO
+  ├── Galeria de imagens com zoom
+  ├── Seleção de variações (cor, tamanho, quantidade)
+  ├── Avaliações e comentários de clientes
+  ├── Produtos relacionados e recomendados
+  ├── Botões "Comprar agora" e "Adicionar ao carrinho"
+  ├── Informações de frete (calcular CEP)
+  └── Descrição detalhada e especificações
+
+☐ CARRINHO DE COMPRAS
+  ├── Drawer lateral do carrinho
+  ├── Adicionar/remover itens com animação
+  ├── Alterar quantidade de produtos
+  ├── Calcular subtotal e total
+  ├── Calcular frete via CEP
+  ├── Cupom de desconto
+  └── Botão "Finalizar compra"
+
+☐ PÁGINA DE CATEGORIA COM FILTROS AVANÇADOS
+  ├── Filtros por preço, marca, categoria, avaliação
+  ├── Ordenação (mais vendidos, menor preço, maior preço)
+  ├── Visualização em grid ou lista
+  ├── Paginação ou scroll infinito
+  └── Filtros salvos na URL para compartilhamento
+
+☐ FUNCIONALIDADES INTERATIVAS
+  ├── Modal de CEP para localização
+  ├── Modal de login/registro
+  ├── Wishlist (lista de favoritos)
+  ├── Comparação de produtos
+  └── Notificações toast (feedback de ações)
+
+☐ PÁGINAS INSTITUCIONAIS
+  ├── Sobre nós
+  ├── Contato (formulário com validação)
+  ├── Política de privacidade
+  ├── Termos de uso
+  ├── Trocas e devoluções
+  └── Perguntas frequentes (FAQ)
+
+----------------------------------------------------------------------------
+                          ETAPA 2 - BACKEND E API
+----------------------------------------------------------------------------
+
+☐ ARQUITETURA BACKEND
+  ├── Node.js + Express + TypeScript
+  ├── PostgreSQL com Prisma ORM
+  ├── Redis para cache e sessões
+  ├── JWT para autenticação
+  ├── Docker para containerização
+  └── API RESTful documentada (Swagger)
+
+☐ AUTENTICAÇÃO E USUÁRIOS
+  ├── Cadastro e login de usuários
+  ├── Recuperação de senha
+  ├── Autenticação com Google/Facebook (OAuth)
+  ├── Perfil do usuário (dados, endereços)
+  ├── Histórico de pedidos
+  └── Níveis de acesso (admin, cliente)
+
+☐ CATÁLOGO DE PRODUTOS
+  ├── CRUD de produtos (admin)
+  ├── Upload de imagens
+  ├── Gestão de categorias e marcas
+  ├── Controle de estoque
+  ├── Variações de produtos (tamanho, cor)
+  └── Busca com filtros e paginação
+
+☐ CARRINHO E PEDIDOS
+  ├── CRUD de carrinho (persistido no banco)
+  ├── Cálculo de frete via API dos Correios/Melhor Envio
+  ├── Gestão de pedidos
+  ├── Status de pedido (pendente, pago, enviado, entregue)
+  └── Notificações por e-mail
+
+----------------------------------------------------------------------------
+                          ETAPA 3 - PAGAMENTOS
+----------------------------------------------------------------------------
+
+☐ GATEWAYS DE PAGAMENTO
+  ├── Integração com Stripe (cartões internacionais)
+  ├── Integração com Mercado Pago (América Latina)
+  ├── Integração com PagSeguro (Brasil)
+  ├── Boleto bancário
+  ├── PIX (pagamento instantâneo)
+  └── Parcelamento com e sem juros
+
+☐ SEGURANÇA
+  ├── HTTPS obrigatório
+  ├── Sanitização de inputs (XSS, SQL Injection)
+  ├── Rate limiting para prevenir ataques
+  ├── Webhooks para confirmação de pagamentos
+  └── PCI Compliance para dados de cartão
+
+----------------------------------------------------------------------------
+                          ETAPA 4 - INFRAESTRUTURA E HOSPEDAGEM
+----------------------------------------------------------------------------
+
+☐ DEPLOY E HOSPEDAGEM
+  ├── Frontend: Vercel / Netlify / AWS S3 + CloudFront
+  ├── Backend: AWS EC2 / Render / Railway
+  ├── Banco de dados: AWS RDS / Supabase
+  ├── CDN para imagens
+  ├── Domínio próprio com SSL
+  └── Monitoramento e logs
+
+☐ OTIMIZAÇÕES
+  ├── SEO completo (metatags, sitemap, robots.txt)
+  ├── PWA (Progressive Web App)
+  ├── Lazy loading de imagens
+  ├── Code splitting
+  ├── Analytics (Google Analytics, Hotjar)
+  └── Performance (Lighthouse > 90)
+
+================================================================================
+                    ESCALAS DE PREÇO - MERCADO
+================================================================================
+
+O projeto é dividido em entregas modulares para melhor adequação ao orçamento
+do cliente:
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PACOTE BÁSICO (R$ 8.000 - R$ 10.000)                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Frontend completo com todas as funcionalidades descritas na Etapa 1      │
+│ • Catálogo de produtos estático (JSON)                                     │
+│ • Carrinho com localStorage                                                │
+│ • Formulário de contato                                                    │
+│ • Layout responsivo                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PACOTE PROFISSIONAL (R$ 15.000 - R$ 18.000)                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Frontend completo (Etapa 1)                                              │
+│ • Backend completo (Etapa 2)                                               │
+│ • Banco de dados PostgreSQL                                                │
+│ • Autenticação de usuários                                                 │
+│ • Painel administrativo básico                                             │
+│ • API RESTful                                                              │
+│ • Hospedagem inicial configurada                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PACOTE COMPLETO (R$ 18.000 - R$ 25.000)                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Frontend completo (Etapa 1)                                              │
+│ • Backend completo (Etapa 2)                                               │
+│ • Integração com gateways de pagamento (Etapa 3)                           │
+│ • Infraestrutura completa (Etapa 4)                                        │
+│ • Dashboard administrativo avançado                                        │
+│ • Relatórios e analytics                                                   │
+│ • Treinamento para o cliente                                               │
+│ • 3 meses de suporte pós-entrega                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                    PRÓXIMA REUNIÃO DE ALINHAMENTO
+================================================================================
+
+Data: A definir
+Pautas:
+  1. Definir quais banners serão implementados
+  2. Levantar todas as categorias e subcategorias necessárias
+  3. Escolher o gateway de pagamento
+  4. Definir pacote de entrega (Básico / Profissional / Completo)
+  5. Estabelecer cronograma de entregas
+
+================================================================================
+                          OBSERVAÇÕES IMPORTANTES
+================================================================================
+
+• Todo o código será entregue com documentação completa
+• O projeto é escalável para adicionar novas funcionalidades
+• Código limpo, componentizado e com boas práticas
+• Compatível com os principais navegadores (Chrome, Firefox, Safari, Edge)
+• Design responsivo para todos os dispositivos
+• SEO otimizado para melhor ranqueamento no Google
+
+================================================================================
+                        FIM DA DOCUMENTAÇÃO ATUALIZADA
+================================================================================
+
+Data: 26/03/2026
+Hora: 23:00
+Versão: 1.1.0
+Status: 🟢 EM DESENVOLVIMENTO - AGUARDANDO PRÓXIMAS ETAPAS
+
+================================================================================
